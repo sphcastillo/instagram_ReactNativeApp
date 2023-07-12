@@ -7,26 +7,33 @@ import Feather from "react-native-vector-icons/Feather";
 import styles from './styles';
 import colors from "../../theme/colors";
 import fonts from  '../../theme/fonts';
+import Comment from '../Comment/Comment';
+import { IPost } from '../../types/models';
 
-const FeedPost = () => {
+interface IFeedPost {
+  post: IPost
+}
+
+const FeedPost = (props: IFeedPost) => {
+    const { post } = props;
     return (
         <View style={styles.post}>
             {/* Header */}
             <View style={styles.header}>
                 <Image 
                     source={{
-                    uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+                    uri: post.user.image,
                     }}
                     style={styles.userAvatar}
                 />
-                <Text style={styles.userName}>vadimnotjustdev</Text>
+                <Text style={styles.userName}>{post.user.username}</Text>
         
                 <Entypo name="dots-three-horizontal" size={16} style={styles.threeDots}/>
             </View>
   
             {/* Content */}
             <Image source={{
-            uri: 'https://www.traveloffpath.com/wp-content/uploads/2022/06/Aerial-shot-of-the-city-of-Vancouver-Canada.jpg'
+            uri: post.image
             }}
             style={styles.image}
             />
@@ -64,32 +71,24 @@ const FeedPost = () => {
           <Text style={styles.likedText}>
             Liked by{' '}
             <Text style={styles.bold}>jerimiah2405</Text> and{' '} 
-            <Text style={styles.bold}>66 others</Text>
+            <Text style={styles.bold}>{post.nofLikes} others</Text>
           </Text>
   
           {/* Post description */}
           <Text style={styles.text}>
-            <Text style={{fontWeight: fonts.weight.bold}}>vadimnotjustdev</Text>{' '}
-              Lorem ipsumit amet elit, sed do eiusmod tempor incididunt im veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure nulla pariatur.
+            <Text style={{fontWeight: fonts.weight.bold}}>{post.user.username}</Text>{' '}
+              {post.description}
           </Text>
   
           {/* Comments */}
-          <Text style={styles.lightText}>View all 16 comments</Text>
-          <View style={styles.comment}> 
-            <Text style={styles.commentText}>
-              <Text style={styles.bold}>rajhextone_3</Text>{' '}
-                Adipiscing elit, sed do eiusmod nisi ut aliquip ex ea commodo consequat. Duis aute irure nulla pariatur.
-            </Text>
-            <AntDesign 
-              name={'hearto'}
-              size={14}
-              style={styles.icon}
-              color={colors.black}
-            />
-          </View>
+          <Text style={styles.lightText}>View all {post.nofComments} comments</Text>
+          {post.comments.map(comment => (
+            <Comment key={comment.id} comment={comment}/>
+          ))}
+
   
           {/* Posted date */}
-          <Text style={styles.lightText}>19 December, 2023</Text>
+          <Text style={styles.lightText}>{post.createdAt}</Text>
 
         </View>
       </View>
