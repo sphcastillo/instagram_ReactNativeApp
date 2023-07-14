@@ -43,9 +43,9 @@ export default StyleSheet.create({
     },
     likedText: {
         color: colors.black,
-        lineHeight: 17,
-        paddingTop: 4,
-        paddingBottom: 6
+        lineHeight: 18,
+        paddingTop: 3,
+        paddingBottom: 5
     },
     text: {
       color: colors.black,
