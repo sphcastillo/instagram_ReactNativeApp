@@ -46,7 +46,6 @@ const FeedPost = (props: IFeedPost) => {
         </DoublePressable>
       )
 
-
     } else if (post.images){
       content = <Carousel images={post.images} onDoublePress={toggleLike}/>;
     }
