@@ -10,6 +10,7 @@ import fonts from  '../../theme/fonts';
 import Comment from '../Comment/Comment';
 import { IPost } from '../../types/models';
 import DoublePressable from '../DoublePressable';
+import Carousel from '../Carousel/Carousel';
 
 interface IFeedPost {
   post: IPost
@@ -25,8 +26,6 @@ const FeedPost = (props: IFeedPost) => {
       // change the value of our state z
       // update function 
       setIsDescriptionExpanded(existingValue => !existingValue); 
-
-      
     };
 
     const toggleLike = () => {
@@ -34,7 +33,23 @@ const FeedPost = (props: IFeedPost) => {
       setIsLiked(existingValue => !existingValue);
     }
 
+    let content;
+    if(post.image){
+      content = (
+        <DoublePressable onDoublePress={toggleLike}>
+          <Image 
+            source={{
+              uri: post.image,
+            }}
+            style={styles.image}
+          />
+        </DoublePressable>
+      )
 
+
+    } else if (post.images){
+      content = <Carousel images={post.images} onDoublePress={toggleLike}/>;
+    }
 
 
     return (
@@ -53,13 +68,7 @@ const FeedPost = (props: IFeedPost) => {
             </View>
   
             {/* Content */}
-            <DoublePressable onDoublePress={toggleLike}>
-              <Image source={{
-              uri: post.image
-              }}
-              style={styles.image}
-              />
-            </DoublePressable>
+              {content}
 
             {/* Footer */}
             <View style={styles.footer}>
