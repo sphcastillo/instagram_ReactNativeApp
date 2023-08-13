@@ -6,9 +6,10 @@ import colors from '../../theme/colors';
 
 interface IVideoPlayer {
     uri: string;
+    paused: boolean;
 }
 
-const VideoPlayer = ({ uri } : IVideoPlayer) => {
+const VideoPlayer = ({ uri, paused } : IVideoPlayer) => {
     const [muted, setMuted] = useState(true);
 
     return (
@@ -19,6 +20,7 @@ const VideoPlayer = ({ uri } : IVideoPlayer) => {
                 resizeMode="cover"
                 repeat
                 muted={muted}
+                paused={paused}
             />
             <Pressable onPress={() => setMuted(v => !v)} style={styles.muteButton}>
                 <Ionicons 

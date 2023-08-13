@@ -15,18 +15,16 @@ import VideoPlayer from '../VideoPlayer';
 
 
 interface IFeedPost {
-  post: IPost
+  post: IPost,
+  isVisible: boolean;
 }
 
-const FeedPost = (props: IFeedPost) => {
-    const { post } = props;
-
+const FeedPost = ({post, isVisible}: IFeedPost) => {
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
 
     const toggleDescriptionExpanded = () => {
-      // change the value of our state z
-      // update function 
+
       setIsDescriptionExpanded(existingValue => !existingValue); 
     };
 
@@ -53,7 +51,7 @@ const FeedPost = (props: IFeedPost) => {
     } else if (post.video){
       content =  (
         <DoublePressable  onDoublePress={toggleLike}>
-          <VideoPlayer uri={post.video}/>
+          <VideoPlayer uri={post.video} paused={!isVisible}/>
         </DoublePressable>
       )
     }
